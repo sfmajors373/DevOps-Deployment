@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1 
+kind: Deployment 
+metadata:
+  name: lambda-devops
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lambda-devops
+    spec:
+      containers:
+      - name: master
+        image: gcr.io/sunny-equinox-179919/lambda-devops:v1
