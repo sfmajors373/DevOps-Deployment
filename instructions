@@ -15,3 +15,39 @@ docker build -t gcr.io/${PROJECT_ID}/lambda-devops:v1 .
 docker run -d -p 8080:8080 gcr.io/${PROJECT_ID}/lambda-devops:v1
 
 gcloud docker -- push gcr.io/${PROJECT_ID}/lambda-devops:v1
+
+kubectl create -f lambda-devops-deployment.yaml --record
+
+kubectl edit deployment/lambda-devops  ---> change version number in it to update to v2
+
+kubectl get pods
+
+kubectl get services
+
+kubectl expose deployment lambda-devops --type="LoadBalancer" --port=8080 --target-port=8080
+
+kubectl describe services lambda-devops 
+
+front end on port 80
+
+FRONT END:
+********************
+
+same project id
+
+docker file:
+FROM node: 5.4
+COPY package.json package.json
+WORKDIR /src
+RUN npm install
+COPY src/* /src
+EXPOSE 8081
+CMD["node", "start"]
+
+
+kubectl expose deployment lambda-devops --type="LoadBalancer" --port=8080 --target-port=80
+
+
+
+// make front end work
+make request and request promise work or any other ajax, I think
